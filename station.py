@@ -32,11 +32,11 @@ class Station(object):
             print("Successful!")
             r = ujson.loads(r.text)
             if station_id is not None:
-                return cls(r.external_id, r.name, r.latitude, r.longitude, r.altitude)
+                return cls(r["external_id"], r["name"], r["latitude"], r["longitude"], r["altitude"])
             else:
                 stations = []
                 for sta in r:
-                    stations.append(cls(sta.external_id, sta.name, sta.latitude, sta.longitude, sta.altitude))
+                    stations.append(cls(sta["external_id"], sta["name"], sta["latitude"], sta["longitude"], sta["altitude"]))
                 return stations
         else:
             print("Something went wrong:\n" + r.text)
@@ -49,7 +49,7 @@ class Station(object):
         r = stationsapi30.register_station(api_key, self.external_id, self.name, self.latitude, self.longitude, self.altitude)
         if r.status_code == 201:
             print("Successful!")
-            self.station_id = ujson.loads(r.text).id
+            self.station_id = ujson.loads(r.text)["ID"]
         else:
             print("Something went wrong:\n" + r.text)
 
@@ -71,11 +71,13 @@ class Station(object):
         r = stationsapi30.update_station(api_key, self.station_id, {
             "external_id": self.external_id,
             "name": self.name,
-            "latitude": self.latitudelat,
-            "longitude": self.longitudelong,
+            "latitude": self.latitudet,
+            "longitude": self.longitude,
             "altitude": self.altitude
         })
         if r.status_code == 200:
             print("Successful!")
         else:
             print("Something went wrong:\n" + r.text)
+
+#TODO: get_measurements, delete
