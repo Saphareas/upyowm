@@ -33,11 +33,11 @@ class Station(object):
             print("Successful!")
             r = ujson.loads(r.text)
             if station_id is not None:
-                return cls(r["external_id"], r["name"], r["latitude"], r["longitude"], r["altitude"])
+                return cls(r["external_id"], r["name"], r["latitude"], r["longitude"], r["altitude"], station_id=r["ID"])
             else:
                 stations = []
                 for sta in r:
-                    stations.append(cls(sta["external_id"], sta["name"], sta["latitude"], sta["longitude"], sta["altitude"]))
+                    stations.append(cls(sta["external_id"], sta["name"], sta["latitude"], sta["longitude"], sta["altitude"], station_id=sta["id"]))
                 return stations
         else:
             print("Something went wrong:\n" + r.text)
