@@ -55,6 +55,5 @@ def get_aggregated_measurements(api_key, _station_id, _type, _limit, _from, _to)
     url += "?appid={}".format(api_key)
     for param in ["station_id", "type", "limit", "from", "to"]:
         url += "&{}={}".format(param, eval("_"+param))
-    print(url)
     response = urequests.get(url)
     return response
