@@ -1,5 +1,6 @@
 from . import stationsapi30
 import json as ujson
+import time
 
 class Station(object):
     def __init__(self, eid, name, lat, long, alt, station_id=None):
@@ -80,4 +81,15 @@ class Station(object):
         else:
             print("Something went wrong:\n" + r.text)
 
-#TODO: get_measurements, delete
+    def get_measurements(self, api_key, measure_type, limit, interval_from=0, interval_to=int(time.time())):
+        m = stationsapi30.get_aggregated_measurements(api_key, self.station_id, measure_type, limit, interval_from, interval_to)
+        if m.status_code == 200:
+            print("Successful!")
+            m = ujson.loads(m.text)
+            return m
+        else:
+            print("Something went wrong:\n" + m.text)
+
+    def delete(self, api_key):
+        """Deletes/unregisters the station on owm.org"""
+        stationsapi30.delete_station(api_key, self.station_id)
