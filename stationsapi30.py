@@ -50,10 +50,11 @@ def upload_measurement(api_key, data):
     response = urequests.post(url, json=data, headers=header)
     return response
 
-def get_aggregated_measurements(api_key, station_id, unit_type, limit):
-    url = "http://api.openweathermap.org/data/3.0/stations"
+def get_aggregated_measurements(api_key, _station_id, _type, _limit, _from, _to):
+    url = "http://api.openweathermap.org/data/3.0/measurements"
     url += "?appid={}".format(api_key)
-    for param in ["station_id", "unit_type", "limit"]:
-        url += "&{}={}".format(param, eval(param))
+    for param in ["station_id", "type", "limit", "from", "to"]:
+        url += "&{}={}".format(param, eval("_"+param))
+    print(url)
     response = urequests.get(url)
     return response
