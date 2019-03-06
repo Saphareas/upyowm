@@ -1,5 +1,5 @@
 from . import stationsapi30
-import json as ujson
+import ujson
 import time
 
 class Station(object):
@@ -20,6 +20,7 @@ class Station(object):
         self.station_id = station_id
 
     @classmethod
+    #TODO: get by eid
     def from_owm(cls, api_key, station_id=None ):
         """Gets information about a station from OWM and creates a new Station object from it
 
@@ -69,10 +70,10 @@ class Station(object):
         """Update the station in the OWM service
         :param api_key: OWMs API key the Station should be registered for
         """
-        r = stationsapi30.update_station(api_key, self.station_id, {
+        r = stationsapi30.update_station(api_key, self.station_id, new_data={
             "external_id": self.external_id,
             "name": self.name,
-            "latitude": self.latitudet,
+            "latitude": self.latitude,
             "longitude": self.longitude,
             "altitude": self.altitude
         })

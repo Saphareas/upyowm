@@ -1,4 +1,4 @@
-import requests as urequests
+import urequests
 
 def register_station(api_key, eid, name, lat, long, alt):
     """HTTP 201 if successful"""
@@ -29,7 +29,7 @@ def update_station(api_key, station_id, **kwargs):
     url += "/{}".format(station_id)
     url += "?appid={}".format(api_key)
     header = { "Content-Type": "application/json" }
-    response = urequests.put(url, data=kwargs)
+    response = urequests.put(url, data=kwargs["new_data"])
     return response
 
 def delete_station(api_key, station_id):
